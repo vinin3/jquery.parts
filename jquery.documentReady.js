@@ -3,7 +3,7 @@
   you wish to use a cross-browser DOMReady solution 
   without opting for a library.
 
-  Demo: http://jsfiddle.net/9CWtz/
+  Demo: http://jsfiddle.net/zKLpb/
 
   usage:
   $(function(){
@@ -28,7 +28,16 @@
     readyBound = false,
     DOMReadyCallback = function () {},
     // The ready event handler
-    DOMContentLoaded;
+    DOMContentLoaded = function() {
+        if ( document.addEventListener ) {
+            document.removeEventListener( "DOMContentLoaded", DOMContentLoaded, false );
+        } else {
+            // we're here because readyState !== "loading" in oldIE
+            // which is good enough for us to call the dom ready!
+            document.detachEvent( "onreadystatechange", DOMContentLoaded );
+        }
+        DOMReady();
+    };
   // Is the DOM ready to be used? Set to true once it occurs.
   $.isReady = false;
   // Handle when the DOM is ready
@@ -54,7 +63,7 @@
       readyBound = true;
       // Catch cases where $ is called after the
       // browser event has already occurred.
-      if (document.readyState === "complete") {
+      if (document.readyState !== "loading") {
         DOMReady();
       }
       // Mozilla, Opera and webkit nightlies currently support this event
@@ -97,21 +106,6 @@
       // and execute any waiting functions
       DOMReady();
     } // /doScrollCheck()
-    // Cleanup functions for the document ready method
-  if (document.addEventListener) {
-    DOMContentLoaded = function () {
-      document.removeEventListener("DOMContentLoaded", DOMContentLoaded, false);
-      DOMReady();
-    };
-  } else if (document.attachEvent) {
-    DOMContentLoaded = function () {
-      // Make sure body exists, at least, in case IE gets a little overzealous (ticket #5443).
-      if (document.readyState === "complete") {
-        document.detachEvent("onreadystatechange", DOMContentLoaded);
-        DOMReady();
-      }
-    };
-  } // /if()
   // Expose $ to the global object
   window.$ = $;
 })(window);
