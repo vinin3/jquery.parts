@@ -55,7 +55,7 @@
         DOMReadyCallback();
         // Execute all of them
       }
-    } // /ready()
+    }; // /ready()
   var bindReady = function () {
       if (readyBound) {
         return;
@@ -105,7 +105,7 @@
       }
       // and execute any waiting functions
       DOMReady();
-    } // /doScrollCheck()
+    }; // /doScrollCheck()
   // Expose $ to the global object
   window.$ = $;
 })(window);
