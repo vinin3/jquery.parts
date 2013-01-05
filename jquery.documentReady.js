@@ -49,7 +49,7 @@
 			if ( !$.isReady ) {
 				// Make sure body exists, at least, in case IE gets a little overzealous (ticket #5443).
 				if ( !document.body ) {
-					return setTimeout( jQuery.ready, 1 );
+					return setTimeout( DOMReady, 1 );
 				}
 				// Remember that the DOM is ready
 				$.isReady = true;
