@@ -7,7 +7,7 @@
 
 	usage:
 	$(function(){
-		 // your code
+		// your code
 	});
 
 	Parts: jQuery project, Diego Perini, Lucent M.

@@ -1,18 +1,18 @@
 /*!
- * jQuery JavaScript Library v1.7.2
+ * jQuery JavaScript Library v1.8.3
  * http://jquery.com/
  *
- * Copyright 2011, John Resig
- * Dual licensed under the MIT or GPL Version 2 licenses.
+ * Copyright 2013 jQuery Foundation and other contributors
+ * Released under the MIT license
  * http://jquery.org/license
  */
 
 /*
 
 jQuery.type() and other specific type checks
-extracted from the jQuery 1.7.2 source
+extracted from the jQuery 1.8.3 source
 
-Credit: @sindresorhus
+Credit: @sindresorhus, @wibblymat
 
 
 Usage:
@@ -34,11 +34,22 @@ http://api.jquery.com/category/utilities/
 
 	// [[Class]] -> type pairs
 	var class2type = {},
-		classTypes = "Boolean Number String Function Array Date RegExp Object".split(" "),
-		l = classTypes.length,
-		classTypeName,
-		toString = Object.prototype.toString,
-		hasOwn = Object.prototype.hasOwnProperty;
+		core_toString = Object.prototype.toString,
+		core_hasOwn = Object.prototype.hasOwnProperty;
+
+	var each = function( obj, callback ) {
+		var i = 0,
+			length = obj.length;
+
+		for ( ; i < length; ) {
+			if ( callback.call( obj[ i ], i, obj[ i++ ] ) === false ) {
+				break;
+			}
+		}
+
+		return obj;
+	};
+
 
 	// See test/unit/core.js for details concerning isFunction.
 	// Since version 1.3, DOM methods and functions like alert
@@ -62,7 +73,7 @@ http://api.jquery.com/category/utilities/
 	window.type = function( obj ) {
 		return obj == null ?
 			String( obj ) :
-			class2type[ toString.call(obj) ] || "object";
+			class2type[ core_toString.call(obj) ] || "object";
 	};
 
 	window.isPlainObject = function( obj ) {
@@ -76,8 +87,8 @@ http://api.jquery.com/category/utilities/
 		try {
 			// Not own constructor property must be Object
 			if ( obj.constructor &&
-				!hasOwn.call(obj, "constructor") &&
-				!hasOwn.call(obj.constructor.prototype, "isPrototypeOf") ) {
+				!core_hasOwn.call(obj, "constructor") &&
+				!core_hasOwn.call(obj.constructor.prototype, "isPrototypeOf") ) {
 				return false;
 			}
 		} catch ( e ) {
@@ -91,20 +102,20 @@ http://api.jquery.com/category/utilities/
 		var key;
 		for ( key in obj ) {}
 
-		return key === undefined || hasOwn.call( obj, key );
+		return key === undefined || core_hasOwn.call( obj, key );
 	};
 
 	window.isEmptyObject = function( obj ) {
-		for ( var name in obj ) {
+		var name;
+		for ( name in obj ) {
 			return false;
 		}
 		return true;
 	};
 
-	// Populate the class2type map
-	while ( l-- ) {
-		classTypeName = classTypes[ l ];
-		class2type[ "[object " + classTypeName + "]" ] = classTypeName.toLowerCase();
-	}
 
+	// Populate the class2type map
+	each("Boolean Number String Function Array Date RegExp Object".split(" "), function(i, name) {
+		class2type[ "[object " + name + "]" ] = name.toLowerCase();
+	});
 })( window );
