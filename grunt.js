@@ -1,13 +1,14 @@
-/*global module:false*/
-module.exports = function(grunt) {
-	"use strict";
-
-	var jshint = "<json:.jshintrc>";
-
-	// Project configuration.
+/*global module:false */
+/*jshint node:true */
+"use strict";
+module.exports = function (grunt) {
 	grunt.initConfig({
 		lint: {
-			files: ["grunt.js", "jquery.*.js", "test/*.js"]
+			files: [
+				"grunt.js",
+				"jquery.*.js",
+				"test/*.js"
+			]
 		},
 		qunit: {
 			files: ["test/*.html"]
@@ -17,13 +18,9 @@ module.exports = function(grunt) {
 			tasks: "lint qunit"
 		},
 		jshint: {
-			options: jshint,
-			globals: {
-			}
+			options: "<json:.jshintrc>"
 		}
 	});
 
-	// Default task.
 	grunt.registerTask("default", "lint qunit");
-
 };
