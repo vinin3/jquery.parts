@@ -1,0 +1,28 @@
+{
+  "name": "jquery-parts",
+  "version": "0.1.0",
+  "description": "Independent blocks of functionality extracted from jQuery core for use externally. Consider experimental.",
+  "keywords": [
+    "jquery"
+  ],
+  "homepage": "https://github.com/addyosmani/jquery.parts",
+  "bugs": "https://github.com/addyosmani/jquery.parts/issues",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/addyosmani/jquery.parts.git"
+  },
+  "scripts": {
+    "test": "grunt"
+  },
+  "devDependencies": {
+    "grunt": "~0.3.17"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ]
+}
