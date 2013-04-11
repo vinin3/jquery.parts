@@ -18,10 +18,14 @@
 
 	// Define a local copy of $
 	var $ = function( callback ) {
+			var oldDOMReadyCallback = DOMReadyCallback;
 			readyBound = false;
 			$.isReady = false;
 			if ( typeof callback === "function" ) {
-				DOMReadyCallback = callback;
+				DOMReadyCallback = function () {
+					oldDOMReadyCallback();
+					callback();
+				};
 			}
 			bindReady();
 		},
@@ -55,6 +59,7 @@
 				$.isReady = true;
 				// If there are functions bound, to execute
 				DOMReadyCallback();
+				DOMReadyCallback = function() {};
 				// Execute all of them
 			}
 		}, // /ready()
