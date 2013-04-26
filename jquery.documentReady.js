@@ -74,8 +74,8 @@
 
 			// Catch cases where $ is called after the
 			// browser event has already occurred.
-			if ( document.readyState !== "loading" ) {
-				DOMReady();
+			if ( document.readyState === "complete" ) {
+				setTimeout(DOMReady,1);
 			}
 
 			// Mozilla, Opera and webkit nightlies currently support this event
