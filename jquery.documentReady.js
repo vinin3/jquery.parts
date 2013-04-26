@@ -39,10 +39,12 @@
 		DOMContentLoaded = function() {
 			if ( document.addEventListener ) {
 					document.removeEventListener( "DOMContentLoaded", DOMContentLoaded, false );
+					window.removeEventListener("load", DOMContentLoaded, false);
 			} else {
 					// we're here because readyState !== "loading" in oldIE
 					// which is good enough for us to call the dom ready!
 					document.detachEvent( "onreadystatechange", DOMContentLoaded );
+					window.detachEvent("onload", DOMContentLoaded);
 			}
 			DOMReady();
 		},
@@ -76,10 +78,8 @@
 			// browser event has already occurred.
 			if ( document.readyState === "complete" ) {
 				setTimeout(DOMReady,1);
-			}
-
-			// Mozilla, Opera and webkit nightlies currently support this event
-			if ( document.addEventListener ) {
+				// Mozilla, Opera and webkit nightlies currently support this event
+			} else if ( document.addEventListener ) {
 				// Use the handy event callback
 				document.addEventListener( "DOMContentLoaded", DOMContentLoaded, false );
 				// A fallback to window.onload, that will always work
@@ -94,7 +94,7 @@
 				// If IE and not a frame
 				// continually check to see if the document is ready
 				try {
-					toplevel = window.frameElement == null;
+					toplevel = window.frameElement === null;
 				} catch (e) {}
 				if ( document.documentElement.doScroll && toplevel ) {
 					doScrollCheck();
